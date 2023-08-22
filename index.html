@@ -1,13 +1,74 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + Vue</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.js"></script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>stylefolio</title>
+  <style>
+    @font-face {
+      src: url(./src/font/ASIX-FOUNDER.otf);
+      font-family: my-font;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      position: absolute;
+      width: 99.5%;
+      height: auto;
+      background-color: #000000;
+      background-image:
+         radial-gradient(ellipse farthest-corner at 80vw 15vh ,
+          rgba(164, 164, 164, 0.5) 5%, rgba( 250,240,128,0) 95%
+      );
+      background-attachment:fixed;
+    }
+
+    .background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      background-color: #000000;
+    }
+
+    .home-image-container {
+      position: sticky; 
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      z-index: 0; 
+      overflow: hidden;
+    }
+
+    .home-image {
+      width: 100vw; 
+      height: 100vh;
+      position: sticky; 
+      top: 0;
+      left: 0;
+      z-index: -1; 
+    }
+
+    .title-test {
+      font-family: my-font;
+      font-size: 7vw;
+      color: white;
+      text-align: center;
+      position: relative;
+    }
+  </style>
+</head>  
+<body>
+  <div class="background">
+    <div class="home-image-container">
+      <img src="./src/assets/background.jpg" class="home-image">
+    </div>
+  </div>
+  <h2 class="title-test">name site</h2>
+</body>
 </html>
