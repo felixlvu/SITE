@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <link rel="icon" type="image/svg+xml" href="/src/assets/icon.jpeg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>stylefolio</title>
+  <title>Toulouse1</title>
   <style>
     @font-face {
       src: url(./src/font/ASIX-FOUNDER.otf);
@@ -68,7 +68,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      margin-top: 30vw;
+      margin-top: 15vw;
     }
 
     .img-template {
@@ -80,6 +80,9 @@
 
     .img-template:hover {
       filter: brightness(70%) contrast(120%) grayscale(20%);
+      .text-img {
+        display: block;
+      }
     }
 
     .img-template::before {
@@ -127,6 +130,50 @@
       font-size: 1.5vw;
       color: white;
     }
+
+    .trait-simple {
+      height: 30vw;
+      border: 1px solid rgb(175, 175, 175);
+      margin-right: 1.5vw;
+    }
+
+    .trait-actu {
+      height: 9vw;
+      width: 0.16vw;
+      background-color: rgb(175, 175, 175);
+      margin-left: 1.5vw;
+      margin-top: 1vw;
+      margin-bottom: 1vw;
+    }
+
+    .text-actu {
+      writing-mode: vertical-rl;
+      color: rgb(175, 175, 175);
+      font-family: my-font;
+      font-size: 1vw;
+      text-align: center;
+    }
+
+    .line-container {
+      display: grid;
+      justify-content: right;
+      align-items: right;
+    }
+
+    .img-template:hover + .text-img {
+      display: block;
+    }
+
+    .text-img {
+      transform: translate(0vw, -20vw);
+      font-family: my-font;
+      color: white;
+      font-size: 2vw;
+      width: 26vw;
+      position: absolute;
+      display: none;
+    }
+
   </style>
 </head>  
 <body>
@@ -139,21 +186,36 @@
     <h2 class="title-test">Toulouse1</h2>
     <div class="btnnav">
       <button class="btn-nav">
+        <h2 class="textbtn">sortir</h2>
+      </button>
+      <button class="btn-nav">
         <h2 class="textbtn">music</h2>
       </button>
       <button class="btn-nav">
-        <h2 class="textbtn">contact</h2>
-      </button>
-      <button class="btn-nav">
-        <h2 class="textbtn">zob</h2>
+        <h2 class="textbtn">art</h2>
       </button>
     </div>
   </div>
 
   <div class="test-containner">
-    <img src="./src/assets/pherzy.jpg" class="img-template">
-    <img src="./src/assets/d33p.jpg" class="img-template">
-    <img src="./src/assets/connexion.jpg" class="img-template">
+    <div class="trait-simple"></div>
+    <div class="actu1">
+      <img src="./src/assets/pherzy.jpg" class="img-template">
+      <h2 class="text-img">PHERZY21</h2>
+    </div>
+    <div class="actu2">
+      <img src="./src/assets/d33p.jpg" class="img-template">
+      <h2 class="text-img">d33p eyesclothing</h2>
+    </div>
+    <div class="actu3">
+      <img src="./src/assets/connexion.jpg" class="img-template">
+      <h2 class="text-img">connexion live</h2>
+    </div>
+      <div class="line-container">
+      <div class="trait-actu"></div>
+      <h2 class="text-actu">actualités</h2>
+      <div class="trait-actu"></div>
+    </div>
   </div>
   <div class="test-containner">
     <img src="./src/assets/pherzy.jpg" class="img-template">
