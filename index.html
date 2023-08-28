@@ -202,6 +202,7 @@
       transition: transform 0.3s ease;
     }
     .img-sele {
+      border: 2px solid red;
       position: relative;
       width: 28vw;
       transform: translate(0vw, -7vw);
@@ -216,6 +217,55 @@
       font-size: 3vw;
       color: white;
     }
+
+    .container-sapes {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 1 vw;
+    }
+
+    .btnsapes {
+      position: relative;
+      margin-top: 2vw;
+      width: 85vw;
+      height: 30vw;
+      margin-bottom: 1vw;
+      background-color: transparent; 
+      border: none;
+      color: inherit;
+    }
+
+    .imgsapes {
+      width: 100%;
+      height: 100%;
+    }
+
+    .textsapes {
+      transform: translate(0vw, -20vw);
+      font-family: my-font;
+      font-size: 3.5vw;
+      color: white;
+    }
+
+    .btnsapes:hover {
+      filter: brightness(70%) contrast(120%) grayscale(20%);
+      .textsapes {
+        font-size: 4vw;
+        transition: font-size 0.3s ease;
+      }
+    }
+
+    .container-sortir {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 1 vw;
+      margin-bottom: 10vw;
+    }
+
     @keyframes fadeAnimation {
       0% {
         opacity: 0;
@@ -281,9 +331,18 @@
       <img src="src/assets/pherzy.jpg" class="img-sele">
       <h2 class="textsele">Playlist</h2>
     </div>
-    <button class="btnsapes">
-      <img src="src/assets/sapes.jpg">
-    </button>
   </div>
+    <div class="container-sapes">
+      <button class="btnsapes">
+        <img src="src/assets/sapes.jpg" class="imgsapes">
+        <h2 class="textsapes">SAPES</h2>
+      </button>
+    </div>
+    <div class="container-sortir">
+      <button class="btnsapes">
+        <img src="src/assets/sortir.jpg" class="imgsapes">
+        <h2 class="textsapes">SORTIR</h2>
+      </button>
+    </div>
 </body>
 </html>
