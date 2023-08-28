@@ -71,35 +71,13 @@
       margin-top: 15vw;
     }
 
-    .img-template {
-      width: 28vw;
-      height: 35vw;
-      object-fit: cover;
-      z-index: 1;
-    }
 
-    .img-template:hover {
+    .actu:hover {
       filter: brightness(70%) contrast(120%) grayscale(20%);
-      .text-img {
-        display: block;
-      }
     }
-
-    .img-template::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.5);
-      z-index: 2;
-      transition: opacity 0.3s;
-      opacity: 0;
-    }
-
-    .img-template:hover::before {
-      opacity: 1;
+    
+    .actu:hover .text-img {
+      display: block;
     }
 
     .navbar {
@@ -160,18 +138,39 @@
       align-items: right;
     }
 
-    .img-template:hover + .text-img {
+    .actu:hover + .text-img {
       display: block;
     }
 
     .text-img {
-      transform: translate(0vw, -20vw);
+      position: absolute;
       font-family: my-font;
       color: white;
       font-size: 2vw;
       width: 26vw;
-      position: absolute;
       display: none;
+      left: 0;
+      text-align: left;
+      margin-left: 0.5vw;
+      transform: translateY(-15vw);
+      z-index: 2;
+    }
+
+
+    .img-template {
+      width: 28vw;
+      height: 35vw;
+      object-fit: cover;
+      display: block;
+      z-index: 1;
+    }
+
+    .actu {
+      background-color: transparent; 
+      border: none;
+      color: inherit;
+      width: 28vw;
+      height: 35vw;
     }
 
     .fadeIn {
@@ -246,6 +245,7 @@
       transform: translate(0vw, -20vw);
       font-family: my-font;
       font-size: 3.5vw;
+      height: 2vw;
       color: white;
     }
 
@@ -310,6 +310,39 @@
       display: grid;
     }
 
+    .animate-element {
+      opacity: 0;
+      transform: translateX(-20px);
+      transition: opacity 1s ease, transform 1s ease;
+    }
+
+    .animate-element.animate {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .animate-element1 {
+      opacity: 0;
+      transform: translateX(20px);
+      transition: opacity 1s ease, transform 1s ease;
+    }
+
+    .animate-element1.animate {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .animate-element2 {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 1s ease, transform 1s ease;
+    }
+
+    .animate-element2.animate {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
     @keyframes fadeAnimation {
       0% {
         opacity: 0;
@@ -337,25 +370,25 @@
         <h2 class="textbtn">music</h2>
       </button>
       <button class="btn-nav">
-        <h2 class="textbtn">art</h2>
+        <h2 class="textbtn">sapes</h2>
       </button>
     </div>
   </div>
 
   <div class="test-containner fadeIn">
     <div class="trait-simple"></div>
-    <div class="actu1">
+    <button class="actu">
       <img src="./src/assets/pherzy.jpg" class="img-template">
       <h2 class="text-img">PHERZY21</h2>
-    </div>
-    <div class="actu2">
+    </button>
+    <button class="actu">
       <img src="./src/assets/d33p.jpg" class="img-template">
       <h2 class="text-img">d33p eyesclothing</h2>
-    </div>
-    <div class="actu3">
+    </button>
+    <button class="actu">
       <img src="./src/assets/connexion.jpg" class="img-template">
       <h2 class="text-img">connexion live</h2>
-    </div>
+    </button>
       <div class="line-container">
       <div class="trait-actu"></div>
       <h2 class="text-actu">actualités</h2>
@@ -364,36 +397,57 @@
   </div>
   <div class="container-sortir">
     <div class="container-cx">
-      <button class="btnconcert">
+      <button class="btnconcert animate-element">
         <h2 class="textsortir">CONCERT</h2>
       </button>
-      <button class="btnexpo">
+      <button class="btnexpo animate-element">
         <h2 class="textsortir">EXPO</h2>
       </button>
     </div>
-    <button class="btnsoire">
+    <button class="btnsoire animate-element1">
       <h2 class="textsortir">SOIRÉE</h2>
     </button>
   </div>
   <div class="container-pepites">
-    <div class="square-pepites">
+    <div class="square-pepites animate-element">
       <img src="src/assets/toulousain.png" class="img-sele" style="transform: translate(0vw, -7vw);">
       <h2 class="textsele">Artistes</h2>
     </div>
-    <div class="square-pepites">
+    <div class="square-pepites animate-element">
       <img src="src/assets/album.jpg" class="img-sele" style="transform: translate(0vw, -2.5vw);">
       <h2 class="textsele">Albums</h2>
     </div>
-    <div class="square-pepites">
+    <div class="square-pepites animate-element">
       <img src="src/assets/playlist.png" class="img-sele" style="height: 8.5vw;">
       <h2 class="textsele">Playlist</h2>
     </div>
   </div>
   <div class="container-sapes">
-    <button class="btnsapes">
+    <button class="btnsapes animate-element2">
       <img src="src/assets/sapes.jpg" class="imgsapes">
       <h2 class="textsapes">SAPES</h2>
     </button>
   </div>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script>
+    const animateElements = document.querySelectorAll('.animate-element, .animate-element1, .animate-element2');
+    const options = {
+      threshold: 0.5,
+    };
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.intersectionRatio > 0) {
+          entry.target.classList.add('animate');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, options);
+
+    animateElements.forEach(element => {
+      observer.observe(element);
+    });
+</script>
 </body>
 </html>
