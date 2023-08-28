@@ -73,7 +73,7 @@
 
     .img-template {
       width: 28vw;
-      height: auto;
+      height: 35vw;
       object-fit: cover;
       z-index: 1;
     }
@@ -184,7 +184,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      margin-top: 3vw;
+      margin-top: 5vw;
       display: grid;
     }
 
@@ -202,10 +202,8 @@
       transition: transform 0.3s ease;
     }
     .img-sele {
-      border: 2px solid red;
       position: relative;
       width: 28vw;
-      transform: translate(0vw, -7vw);
     }
 
     .textsele {
@@ -223,7 +221,8 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      margin-top: 1 vw;
+      margin-top: 5vw;
+      margin-bottom: 8vw;
     }
 
     .btnsapes {
@@ -240,6 +239,7 @@
     .imgsapes {
       width: 100%;
       height: 100%;
+
     }
 
     .textsapes {
@@ -259,11 +259,55 @@
 
     .container-sortir {
       position: relative;
+      margin-top: 5vw;
       display: flex;
       justify-content: center;
       align-items: center;
-      margin-top: 1 vw;
-      margin-bottom: 10vw;
+    }
+
+    .btnconcert {
+      position: relative;
+      width: 56vw;
+      height: 17vw;
+      background-color: transparent; 
+      color: inherit;
+      display: inline-block;
+      margin-bottom: 1vw;
+      background-color: #000000;
+      border: none;
+    }
+
+    .btnexpo {
+      position: relative;
+      width: 56vw;
+      height: 17vw;
+      background-color: transparent; 
+      color: inherit;
+      display: inline-block;
+      background-color: #000000;
+      border: none;
+    }
+
+    .btnsoire {
+      position: relative;
+      width: 27vw;
+      height: 35vw;
+      background-color: transparent; 
+      color: inherit;
+      display: inline-block;
+      margin-left: 1vw;
+      background-color: #000000;
+      border: none;
+    }
+
+    .textsortir {
+      font-family: my-font;
+      font-size: 3.5vw;
+      color: white;
+    }
+
+    .container-cx {
+      display: grid;
     }
 
     @keyframes fadeAnimation {
@@ -318,31 +362,38 @@
       <div class="trait-actu"></div>
     </div>
   </div>
+  <div class="container-sortir">
+    <div class="container-cx">
+      <button class="btnconcert">
+        <h2 class="textsortir">CONCERT</h2>
+      </button>
+      <button class="btnexpo">
+        <h2 class="textsortir">EXPO</h2>
+      </button>
+    </div>
+    <button class="btnsoire">
+      <h2 class="textsortir">SOIRÉE</h2>
+    </button>
+  </div>
   <div class="container-pepites">
     <div class="square-pepites">
-      <img src="src/assets/d33p.jpg" class="img-sele">
+      <img src="src/assets/toulousain.png" class="img-sele" style="transform: translate(0vw, -7vw);">
       <h2 class="textsele">Artistes</h2>
     </div>
     <div class="square-pepites">
-      <img src="src/assets/connexion.jpg" class="img-sele">
-      <h2 class="textsele">Concert</h2>
+      <img src="src/assets/album.jpg" class="img-sele" style="transform: translate(0vw, -2.5vw);">
+      <h2 class="textsele">Albums</h2>
     </div>
     <div class="square-pepites">
-      <img src="src/assets/pherzy.jpg" class="img-sele">
+      <img src="src/assets/playlist.png" class="img-sele" style="height: 8.5vw;">
       <h2 class="textsele">Playlist</h2>
     </div>
   </div>
-    <div class="container-sapes">
-      <button class="btnsapes">
-        <img src="src/assets/sapes.jpg" class="imgsapes">
-        <h2 class="textsapes">SAPES</h2>
-      </button>
-    </div>
-    <div class="container-sortir">
-      <button class="btnsapes">
-        <img src="src/assets/sortir.jpg" class="imgsapes">
-        <h2 class="textsapes">SORTIR</h2>
-      </button>
-    </div>
+  <div class="container-sapes">
+    <button class="btnsapes">
+      <img src="src/assets/sapes.jpg" class="imgsapes">
+      <h2 class="textsapes">SAPES</h2>
+    </button>
+  </div>
 </body>
 </html>
