@@ -363,13 +363,13 @@
   <div class="navbar">
     <h2 class="title-test">Toulouse1</h2>
     <div class="btnnav">
-      <button class="btn-nav">
+      <button class="btn-nav scroll-button" data-target="#section1">
         <h2 class="textbtn">sortir</h2>
       </button>
-      <button class="btn-nav">
+      <button class="btn-nav scroll-button" data-target="#section2">
         <h2 class="textbtn">music</h2>
       </button>
-      <button class="btn-nav">
+      <button class="btn-nav scroll-button" data-target="#section3">
         <h2 class="textbtn">sapes</h2>
       </button>
     </div>
@@ -395,7 +395,7 @@
       <div class="trait-actu"></div>
     </div>
   </div>
-  <div class="container-sortir">
+  <div id="section1" class="container-sortir">
     <div class="container-cx">
       <button class="btnconcert animate-element">
         <h2 class="textsortir">CONCERT</h2>
@@ -408,7 +408,7 @@
       <h2 class="textsortir">SOIRÉE</h2>
     </button>
   </div>
-  <div class="container-pepites">
+  <div id="section2" class="container-pepites">
     <div class="square-pepites animate-element">
       <img src="src/assets/toulousain.png" class="img-sele" style="transform: translate(0vw, -7vw);">
       <h2 class="textsele">Artistes</h2>
@@ -422,7 +422,7 @@
       <h2 class="textsele">Playlist</h2>
     </div>
   </div>
-  <div class="container-sapes">
+  <div id="section3" class="container-sapes">
     <button class="btnsapes animate-element2">
       <img src="src/assets/sapes.jpg" class="imgsapes">
       <h2 class="textsapes">SAPES</h2>
@@ -448,6 +448,29 @@
     animateElements.forEach(element => {
       observer.observe(element);
     });
+
+    document.addEventListener("DOMContentLoaded", function() {
+    const scrollButtons = document.querySelectorAll(".scroll-button");
+      
+    scrollButtons.forEach(button => {
+      button.addEventListener("click", function(event) {
+        event.preventDefault();
+        const targetSelector = button.getAttribute("data-target");
+        const targetElement = document.querySelector(targetSelector);
+        
+        if (targetElement) {
+          const targetOffset = targetElement.getBoundingClientRect().top + window.scrollY;
+          const windowHeight = window.innerHeight;
+          const scrollToPosition = targetOffset - (windowHeight / 4);
+          
+          window.scrollTo({
+            top: scrollToPosition,
+            behavior: "smooth"
+          });
+        }
+      });
+    });
+  });
 </script>
 </body>
 </html>
