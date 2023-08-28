@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/src/assets/icon.jpeg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Toulous1</title>
+  <style>
+    @font-face {
+      src: url(./src/font/ASIX-FOUNDER.otf);
+      font-family: my-font;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      position: absolute;
+      width: 99.8%;
+      height: auto;
+      background-color: #000000;
+      background-image:
+         radial-gradient(ellipse farthest-corner at 80vw 15vh ,
+          rgba(164, 164, 164, 0.5) 5%, rgba( 250,240,128,0) 95%
+      );
+      background-attachment:fixed;
+    }
+
+    .background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      background-color: #000000;
+    }
+
+    .home-image-container {
+      position: sticky; 
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      z-index: 0; 
+      overflow: hidden;
+    }
+
+    .home-image {
+      width: 100vw; 
+      height: 100vh;
+      position: sticky; 
+      top: 0;
+      left: 0;
+      z-index: -1; 
+    }
+
+    .title-test {
+      font-family: my-font;
+      font-size: 3.3vw;
+      color: white;
+      position: relative;
+      transform: translate(0vw, -2.5vw);
+    }
+
+    .navbar {
+      height: 8.2vw;
+      position: relative;
+      width: 98.8vw;
+      background-color: #000000;
+      z-index: 4;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .btn-nav {
+        margin-top: 2vw;
+        height: 3vw;
+        width: 35vw;
+        background-color: #000000;
+        border: none;
+    }
+
+    .text-nav {
+        width: 16vw;
+        font-family: my-font;
+        font-size: 2vw;
+        color: white;
+        z-index: 4;
+        margin: 0;
+    }
+
+    .container-t1 {
+        position: relative;
+        width: 100%;
+        height: 22vw;
+        z-index: 4;
+    }
+
+    .container-art {
+        position: relative;
+        width: 100%;
+        height: 22vw;
+        z-index: 4;
+    }
+
+    .text-type {
+        font-family: my-font;
+        font-size: 1.5vw;
+        color: white;
+        margin-left: 1vw;
+    }
+
+
+    .artistecircle {
+        height: 15vw;
+        width: 15vw;
+        border-radius: 50%;
+        margin-top: 1.5vw;
+        margin-left: 2vw;
+    }
+    @keyframes fadeAnimation {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+
+  </style>
+</head>  
+<body>
+    <div class="background">
+        <div class="home-image-container">
+            <img src="./src/assets/background.jpg" class="home-image">
+        </div>
+    </div>
+    <div class="navbar">
+        <button id="home" class="btn-nav">
+            <h2 class="title-test">Toulous1</h2>
+        </button>
+        <h2 class="text-nav">ARTISTES</h2>
+    </div>
+    <div class="container-t1">
+        <h2 class="text-type">Artistes Toulousain</h2>
+        <img src="src/assets/pherzy21.jpg" class="artistecircle ">
+        <img src="src/assets/errwalou.webp" class="artistecircle ">
+        <img src="src/assets/deelee.jpg" class="artistecircle ">
+        <img src="src/assets/realo.jpg" class="artistecircle ">
+        <img src="src/assets/errwalou.webp" class="artistecircle ">
+    </div>
+    <div class="container-art">
+        <h2 class="text-type">Autres Artistes</h2>
+        <img src="src/assets/pherzy21.jpg" class="artistecircle ">
+        <img src="src/assets/errwalou.webp" class="artistecircle ">
+        <img src="src/assets/deelee.jpg" class="artistecircle ">
+        <img src="src/assets/realo.jpg" class="artistecircle ">
+        <img src="src/assets/errwalou.webp" class="artistecircle ">
+    </div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script>
+    document.getElementById("home").addEventListener("click", function() {
+        window.location.href = "index.html"
+    });
+</script>
+</body>
+</html>

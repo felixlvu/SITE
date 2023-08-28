@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="/src/assets/icon.jpeg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Toulouse1</title>
+  <title>Toulous1</title>
   <style>
     @font-face {
       src: url(./src/font/ASIX-FOUNDER.otf);
@@ -361,7 +361,7 @@
     </div>
   </div>
   <div class="navbar">
-    <h2 class="title-test">Toulouse1</h2>
+    <h2 class="title-test">Toulous1</h2>
     <div class="btnnav">
       <button class="btn-nav scroll-button" data-target="#section1">
         <h2 class="textbtn">sortir</h2>
@@ -405,11 +405,11 @@
       </button>
     </div>
     <button class="btnsoire animate-element1">
-      <h2 class="textsortir">SOIRÉE</h2>
+      <h2 class="textsortir">SOIRE</h2>
     </button>
   </div>
   <div id="section2" class="container-pepites">
-    <div class="square-pepites animate-element">
+    <div id="artistes" class="square-pepites animate-element">
       <img src="src/assets/toulousain.png" class="img-sele" style="transform: translate(0vw, -7vw);">
       <h2 class="textsele">Artistes</h2>
     </div>
@@ -417,7 +417,7 @@
       <img src="src/assets/album.jpg" class="img-sele" style="transform: translate(0vw, -2.5vw);">
       <h2 class="textsele">Albums</h2>
     </div>
-    <div class="square-pepites animate-element">
+    <div id="playlist" class="square-pepites animate-element">
       <img src="src/assets/playlist.png" class="img-sele" style="height: 8.5vw;">
       <h2 class="textsele">Playlist</h2>
     </div>
@@ -431,6 +431,17 @@
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script>
+    var playlist = document.getElementById("playlist");
+    playlist.addEventListener("click", redirectToSoundCloud);
+
+    function redirectToSoundCloud() {
+      window.open("https://soundcloud.com/fire_advanced/sets/toulous1", "_blank");
+    }
+
+    document.getElementById("artistes").addEventListener("click", function() {
+      window.location.href = "artistes.html"
+    });
+
     const animateElements = document.querySelectorAll('.animate-element, .animate-element1, .animate-element2');
     const options = {
       threshold: 0.5,
