@@ -179,6 +179,43 @@
       animation: fadeAnimation 2s ease forwards;
     }
 
+    .container-pepites {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 3vw;
+      display: grid;
+    }
+
+    .square-pepites {
+      position: relative;
+      height: 8vw;
+      width: 85vw;
+      background-color: #000000;
+      margin-bottom: 1vw;
+      overflow: hidden;
+    }
+    
+    .square-pepites:hover .textsele {
+      transform: translate(-10vw, -3.5vw);
+      transition: transform 0.3s ease;
+    }
+    .img-sele {
+      position: relative;
+      width: 28vw;
+      transform: translate(0vw, -7vw);
+    }
+
+    .textsele {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-12vw, -3.5vw);
+      font-family: my-font;
+      font-size: 3vw;
+      color: white;
+    }
     @keyframes fadeAnimation {
       0% {
         opacity: 0;
@@ -231,20 +268,22 @@
       <div class="trait-actu"></div>
     </div>
   </div>
-  <div class="test-containner">
-    <img src="./src/assets/pherzy.jpg" class="img-template">
-    <img src="./src/assets/d33p.jpg" class="img-template">
-    <img src="./src/assets/connexion.jpg" class="img-template">
-  </div>
-  <div class="test-containner">
-    <img src="./src/assets/pherzy.jpg" class="img-template">
-    <img src="./src/assets/d33p.jpg" class="img-template">
-    <img src="./src/assets/connexion.jpg" class="img-template">
-  </div>
-  <div class="test-containner">
-    <img src="./src/assets/pherzy.jpg" class="img-template">
-    <img src="./src/assets/d33p.jpg" class="img-template">
-    <img src="./src/assets/connexion.jpg" class="img-template">
+  <div class="container-pepites">
+    <div class="square-pepites">
+      <img src="src/assets/d33p.jpg" class="img-sele">
+      <h2 class="textsele">Artistes</h2>
+    </div>
+    <div class="square-pepites">
+      <img src="src/assets/connexion.jpg" class="img-sele">
+      <h2 class="textsele">Concert</h2>
+    </div>
+    <div class="square-pepites">
+      <img src="src/assets/pherzy.jpg" class="img-sele">
+      <h2 class="textsele">Playlist</h2>
+    </div>
+    <button class="btnsapes">
+      <img src="src/assets/sapes.jpg">
+    </button>
   </div>
 </body>
 </html>
