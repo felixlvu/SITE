@@ -1,321 +1,130 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="/src/assets/icon.jpeg" />
-  <script src="https://kit.fontawesome.com/60ac64f9c0.js" crossorigin="anonymous"></script>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Toulous1</title>
-  <style>
-    @font-face {
-      src: url(./src/font/ASIX-FOUNDER.otf);
-      font-family: my-font;
-    }
+import cv2
+import numpy as np
+from retinaface import RetinaFace
+from facenet_pytorch import InceptionResnetV1
+import os
+import json
+import pickle
 
-    body {
-      top: 0;
-      left: 0;
-      margin: 0;
-      padding: 0;
-      position: absolute;
-      width: 99.8%;
-      height: auto;
-      overflow: hidden;
-      background-color: #000000;
-      background-image:
-         radial-gradient(ellipse farthest-corner at 80vw 15vh ,
-          rgba(164, 164, 164, 0.5) 5%, rgba( 250,240,128,0) 95%
-      );
-      background-attachment:fixed;
-    }
+def load_recognition_model(database_path, save_file):
+    if os.path.exists(save_file):
+        print(f"Chargement des données d'entraînement à partir de {save_file}...")
+        with open(save_file, 'rb') as f:
+            saved_data = pickle.load(f)
+        return saved_data
 
-    .background {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-      background-color: #000000;
-    }
+    print("Modèle de reconnaissance faciale: InceptionResnetV1")
 
-    .home-image-container {
-      position: sticky; 
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100vh;
-      z-index: 0; 
-      overflow: hidden;
-    }
+    resnet = InceptionResnetV1(pretrained='vggface2').eval()
 
-    .home-image {
-      width: 100vw; 
-      height: 100vh;
-      position: sticky; 
-      top: 0;
-      left: 0;
-      z-index: -1; 
-    }
+    database_embeddings = {}
+    database_names = []
 
-    .title-test {
-      font-family: my-font;
-      font-size: 3.3vw;
-      color: white;
-      position: relative;
-      transform: translate(0vw, -2.5vw);
-    }
+    print("Entraînement du modèle de reconnaissance faciale...")
 
-    .navbar {
-      height: 8.2vw;
-      position: relative;
-      width: 100%;
-      background-color: #000000;
-      z-index: 4;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
+    for filename in os.listdir(database_path):
+        if filename.endswith('.mp4'):
+            person_name = os.path.splitext(filename)[0]
+            person_video_path = os.path.join(database_path, filename)
+            person_cap = cv2.VideoCapture(person_video_path)
 
-    .btn-nav {
-        margin-top: 2vw;
-        height: 3vw;
-        width: 35vw;
-        background-color: #000000;
-        border: none;
-    }
+            embeddings = []
+            frame_count = int(person_cap.get(cv2.CAP_PROP_FRAME_COUNT))
 
-    .text-nav {
-        width: 16vw;
-        font-family: my-font;
-        font-size: 2vw;
-        color: white;
-        z-index: 4;
-        margin: 0;
-    }
+            for _ in range(frame_count):
+                ret, frame = person_cap.read()
+                if not ret:
+                    break
 
-    .container-t1 {
-        position: relative;
-        width: 100%;
-        height: 22vw;
-        z-index: 4;
-    }
+                faces = RetinaFace.detect_faces(frame)
+                if isinstance(faces, dict):
+                    for face_id, face_dict in faces.items():
+                        bbox_list = face_dict['facial_area']
+                        x, y, x1, y1 = map(int, bbox_list)
 
-    .container-art {
-        position: relative;
-        width: 100%;
-        height: 22vw;
-        z-index: 4;
-    }
+                        face = frame[y:y1, x:x1]
 
-    .text-type {
-        font-family: my-font;
-        font-size: 1.5vw;
-        color: white;
-        margin-left: 1vw;
-    }
+                        new_size = (160, 160)
+                        resized_face = cv2.resize(face, new_size)
 
+                        face_tensor = (
+                            torch.from_numpy(resized_face)
+                            .permute(2, 0, 1)
+                            .float()
+                            / 255.0
+                        )
 
-    .artistecircle {
-        position: absolute;
-        height: 15vw;
-        width: 15vw;
-        border-radius: 50%;
-        margin-top: 0.5vw;
-        margin-left: 0.5vw;
-        z-index: 4;
-    }
+                        embedding = resnet(face_tensor.unsqueeze(0)).squeeze().detach().numpy()
+                        embeddings.append(embedding)
 
-    .infoart {
-        height: 16vw;
-        width: 16vw;
-        background-color: gray;
-        border-radius: 50%;
-        z-index: 4;
-    }
+            if len(embeddings) > 0:
+                database_embeddings[person_name] = np.mean(embeddings, axis=0)
+                database_names.append(person_name)
 
-    .artirst-ctn {
-        position: relative;
-        width: 16vw;
-        height: 16vw;
-        margin-left: 3.3vw;
-    }
+    data_to_save = (resnet, database_embeddings, database_names)
+    with open(save_file, 'wb') as f:
+        pickle.dump(data_to_save, f)
 
-    .art-cont {
-        position: relative;
-        border: none;
-        color: white;
-        background-color: transparent;
-        display: flex;
-        width: 150%;
-    }
-    .left-art {
-        display: flex;
-        width: 2.5vw;
-        height: 2.5vw;
-        border-radius: 50%;
-        border: none;
-        color: white;
-        background-color: transparent;
-        align-items: center; /* Aligne verticalement au centre */
-        justify-content: center;
-        display: inline-flex;
-    }
-    .left-art:hover {
-        background-color: rgba( 255,255, 255, 0.1); 
-    }
-    .container-name {
-        position: relative;
-        width: 100%;
-        display: inline-flex;
-    }
+    return resnet, database_embeddings, database_names
 
-    .container-arrow {
-        position: absolute;
-        right: 0;
-        bottom: 0;
-    }
-    @keyframes fadeAnimation {
-      0% {
-        opacity: 0;
-      }
-      100% {
-        opacity: 1;
-      }
-    }
+def predict_person(embedding, database_embeddings, database_names, threshold=0.64):
+    best_match = " "
+    best_similarity = threshold 
 
-  </style>
-</head>  
-<body>
-    <div class="background">
-        <div class="home-image-container">
-            <img src="./src/assets/background.jpg" class="home-image">
-        </div>
-    </div>
-    <div class="navbar">
-        <button id="home" class="btn-nav">
-            <h2 class="title-test">Toulous1</h2>
-        </button>
-        <h2 class="text-nav">ARTISTES</h2>
-    </div>
-    <div class="container-t1">
-        <div class="container-name">
-            <h2 class="text-type">Artistes Toulousain</h2>
-            <div class="container-arrow">
-                <button id="rightbtn" class="left-art">
-                    <i class="fa-solid fa-angle-left fa-xl"></i>
-                </button>
-                <button id="leftbtn" class="left-art">
-                    <i class="fa-solid fa-angle-right fa-xl"></i>
-                </button>
-            </div>
-        </div>
-        <div class="art-cont">
-            <div class="artirst-ctn">
-                <img src="src/assets/artistes/pherzy21.jpg" class="artistecircle ">
-            </div>
-            <div class="artirst-ctn">
-                <img src="src/assets/artistes/errwalou.webp" class="artistecircle ">
-            </div>
-            <div class="artirst-ctn">
-                <img src="src/assets/artistes/deelee.jpg" class="artistecircle ">
-            </div>
-            <div class="artirst-ctn">
-                <img src="src/assets/artistes/bbneelou.jpg" class="artistecircle ">
-            </div>
-            <div class="artirst-ctn">
-                <img src="src/assets/artistes/hjeune.jpg" class="artistecircle ">
-            </div>
-            <div class="artirst-ctn">
-                <img src="src/assets/artistes/realo.jpg" class="artistecircle ">
-            </div>
-        </div>
-    </div>
-    <div class="container-t1">
-        <div class="container-name">
-            <h2 class="text-type">Autres Artistes</h2>
-            <div class="container-arrow">
-                <button id="rightbtn2" class="left-art">
-                    <i class="fa-solid fa-angle-left fa-xl"></i>
-                </button>
-                <button id="leftbtn2" class="left-art">
-                    <i class="fa-solid fa-angle-right fa-xl"></i>
-                </button>
-            </div>
-        </div>
-        <div id="art-conte" class="art-cont">
-            <div class="artirst-ctn">
-                <img src="src/assets/artistes/bitsu.jpg" class="artistecircle ">
-            </div>
-            <div class="artirst-ctn">
-                <img src="src/assets/artistes/dara.jpg" class="artistecircle ">
-            </div>
-            <div class="artirst-ctn">
-                <img src="src/assets/artistes/IRKO.jpg" class="artistecircle ">
-            </div>
-            <div class="artirst-ctn">
-                <img src="src/assets/artistes/lileuphon.jpg" class="artistecircle ">
-            </div>
-            <div class="artirst-ctn">
-                <img src="src/assets/artistes/rozzy.jpg" class="artistecircle ">
-            </div>
-            <div class="artirst-ctn">
-                <img src="src/assets/artistes/Teklam.jpeg" class="artistecircle ">
-            </div>
-        </div>
-    </div>      
+    for name, db_embedding in database_embeddings.items():
+        similarity = np.dot(embedding, db_embedding) / (np.linalg.norm(embedding) * np.linalg.norm(db_embedding))
+        if similarity > best_similarity:
+            best_similarity = similarity
+            best_match = name
 
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-<script>
-    document.getElementById("home").addEventListener("click", function() {
-        window.location.href = "index.html"
-    });
+    return best_match
 
-    const menu = document.querySelector('.art-cont');
-    const scrollLeftButton = document.getElementById('leftbtn');
-    let scrollStep = 0;
-    
-    scrollLeftButton.addEventListener('click', () => {
-        scrollStep -= 19;
-        const nb = scrollStep + "vw";
-        menu.style.transition = 'transform 0.3s ease'; // Définit la transition
-        menu.style.transform = `translateX(${nb})`;
-    });
-    
-    const scrollrightButton = document.getElementById('rightbtn');
-    
-    scrollrightButton.addEventListener('click', () => {
-        if (scrollStep !== 0) {
-            scrollStep += 19;
-            const nb = scrollStep + "vw";
-            menu.style.transition = 'transform 0.3s ease'; // Définit la transition
-            menu.style.transform = `translateX(${nb})`;
-        }
-    });
+def process_video_and_generate_json(video_path, resnet, database_embeddings, database_names, output_json):
+    cap = cv2.VideoCapture(video_path)
 
-    const menu2 = document.getElementById('art-conte');
-    const scrollLeftButton2 = document.getElementById('leftbtn2');
-    let scrollStep2 = 0;
-    
-    scrollLeftButton2.addEventListener('click', () => {
-        scrollStep -= 19;
-        const nb = scrollStep + "vw";
-        menu2.style.transition = 'transform 0.3s ease';
-        menu2.style.transform = `translateX(${nb})`;
-    });
-    
-    const scrollrightButton2 = document.getElementById('rightbtn2');
-    
-    scrollrightButton2.addEventListener('click', () => {
-        if (scrollStep !== 0) {
-            scrollStep += 19;
-            const nb = scrollStep + "vw";
-            menu2.style.transition = 'transform 0.3s ease';
-            menu2.style.transform = `translateX(${nb})`;
-        }
-    });
+    # Liste pour stocker les informations sur les personnes détectées
+    detected_people = []
 
-</script>
-</body>
-</html>
+    while True:
+        ret, frame = cap.read()
+        if not ret:
+            break
+
+        faces = RetinaFace.detect_faces(frame)
+        if isinstance(faces, dict):
+            for face_id, face_dict in faces.items():
+                bbox_list = face_dict['facial_area']
+                x, y, x1, y1 = map(int, bbox_list)
+
+                face = frame[y:y1, x:x1]
+
+                new_size = (160, 160)
+                resized_face = cv2.resize(face, new_size)
+
+                face_tensor = (
+                    torch.from_numpy(resized_face)
+                    .permute(2, 0, 1)
+                    .float()
+                    / 255.0
+                )
+
+                embedding = resnet(face_tensor.unsqueeze(0)).squeeze().detach().numpy()
+
+                predicted_name = predict_person(embedding, database_embeddings, database_names)
+
+                # Ajoutez les informations sur la personne détectée à la liste
+                detected_people.append(predicted_name)
+
+    # Enregistrez les informations dans un fichier JSON
+    with open(output_json, 'w') as json_file:
+        json.dump({"DetectedPeople": detected_people}, json_file, indent=4)
+
+if __name__ == "__main__":
+    database_path = 'database'
+    save_file = 'training_data.pkl'
+    resnet, database_embeddings, database_names = load_recognition_model(database_path, save_file)
+
+    video_path = 'input_video.mp4'  # Mettez ici le chemin vers votre vidéo d'entrée
+    output_json = 'output.json'
+
+    process_video_and_generate_json(video_path, resnet, database_embeddings, database_names, output_json)
